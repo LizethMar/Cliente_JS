@@ -1,0 +1,107 @@
+<html>
+    <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+        
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js" integrity="sha256-wS9gmOZBqsqWxgIVgA8Y9WcQOa7PgSIX+rPA0VL2rbQ=" crossorigin="anonymous"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+        
+    <script type="text/javascript" src="../src/parametros.js"></script>
+    <script type="text/javascript" src="../src/peticionGral.js"></script>
+    <script type="text/javascript" src="../src/parseos.js"></script> 
+        
+    </head>
+    
+    <script>
+
+     /* Fondos de inversi&oacute;n COMPRA instrumentos
+      * Muestra la lista de instrumentos de Fondos de inversi&oacute;n COMPRA
+      */
+
+        function ejecutar(numeroContrato){
+            var respuesta = '';
+            var tabla = '';
+            var bodyTabla = '';
+            
+            $('.btnEjecutar').prop('disabled',true);
+            
+            enviarPeticion(PARAMETROS.trading_fi_compra_instrumentos,'contrato='+numeroContrato,function(listaInstrumentosFI){
+                if(listaInstrumentosFI.status != undefined){
+                    respuesta = '<tr><td>'+listaInstrumentosFI.status+'</td>' + 
+                                     '<td>'+listaInstrumentosFI.message+'</td>' + 
+                                     '<td>'+listaInstrumentosFI.code +'</td></tr>';
+                    tabla = '.contenedorTablaError';
+                    bodyTabla = '.bodyRespuestaError';
+                }else {
+                    jQuery.each(listaInstrumentosFI.objCompraInstrumentosFI, function(index,value ) {   
+                        respuesta += '<tr><td>'+listaInstrumentosFI.objCompraInstrumentosFI[index].emisora+'</td>' + 
+                                     '<td>'+listaInstrumentosFI.objCompraInstrumentosFI[index].tipoValor +'</td>' + 
+                                     '<td>'+listaInstrumentosFI.objCompraInstrumentosFI[index].porcentajeActual +'</td>' + 
+                                     '<td>'+listaInstrumentosFI.objCompraInstrumentosFI[index].precio +'</td>' + 
+                                     '<td>'+listaInstrumentosFI.objCompraInstrumentosFI[index].tipoSociedad +'</td></tr>';
+                    });
+                    
+                    tabla = '.contenedorTabla';
+                    bodyTabla = '.bodyRespuesta';
+                }
+                
+               $('.btnEjecutar').prop('disabled',false);    
+               $(tabla).css('display','block');
+               $(bodyTabla).empty().append(respuesta); 
+                
+            });  
+        }    
+
+    </script>
+    
+    <body>
+        <div class="container">
+            <p class="textoPrincipal">Consulta instrumentos Compra FI</p>
+            <div class="row">
+                <div class="col-6">
+                    <p class="textoOpciones">Respuesta</p>
+                    <button class="btnEjecutar" onclick="ejecutar('5264')">Ejecutar</button>
+                    <div class="contenedorTabla">         
+                        <table class="table">
+                            <thead>
+                              <tr>
+                                <th>Emisora</th>
+                                <th>Tipo Valor</th>
+                                <th>% Actual</th>
+                                <th>Precio</th>
+                                <th>Tipo Sociedad</th>
+                              </tr>
+                            </thead>
+                            <tbody class="bodyRespuesta">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <p class="textoOpciones">Errores</p>
+                    <!-- Contrato inexistente 
+                    <button onclick="ejecutar('52640')">Ejecutar</button>-->
+                    <!-- Campos vac&iacute;os 
+                    <button onclick="ejecutar('')">Ejecutar</button>-->
+                    <!-- Campos vac&iacute;os -->
+                    <button class="btnEjecutar" onclick="ejecutar('')">Ejecutar</button>
+                    <div class="contenedorTablaError">         
+                        <table class="table">
+                            <thead>
+                              <tr>
+                                <th>Estatus</th>
+                                <th>Mensaje</th>
+                                <th>C&oacute;digo</th>
+                              </tr>
+                            </thead>
+                            <tbody class="bodyRespuestaError">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>
