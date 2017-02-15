@@ -1,0 +1,25 @@
+/**
+ *
+ */
+
+.container {
+    margin-top: 100px;
+}
+
+.textoPrincipal {
+    color: #49176D;
+    text-align: center;
+}
+
+.textoOpciones {
+    color: #6D6E71;
+    text-align: center;
+}
+
+.contenedorTabla, .contenedorTablaError {
+    display: none;
+}
+
+button {
+    margin-bottom: 20px;
+}
