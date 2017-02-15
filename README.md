@@ -4,7 +4,8 @@ Implementación de Open Kuspit
 
 Variables Configurables
 
-- Archivo parametros.js 
+- Archivo parametros.js : 
+
     url_peticion : Cambiar la url para pruebas
 
 
