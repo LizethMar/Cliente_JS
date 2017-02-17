@@ -1,13 +1,8 @@
 # Cliente_JS
 
-Implementación de Open Kuspit
+<article class="markdown-body entry-content" itemprop="text">
 
-Variables Configurables
-
-- Archivo parametros.js : 
-
-    url_peticion : Cambiar la url para pruebas
-
-
-Método - Consulta de instrumentos Compra Fondos de Inversión
+    <h1>Implementación de Open Kuspit</h1>
+    
+</article>
 
